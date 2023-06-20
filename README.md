@@ -33,7 +33,7 @@ Execute os seguintes comandos
     npm run dev 
 ```
 
-##Tecnologias
+## Tecnologias
 - Vuejs
 - Vuex
 - Laravel
