@@ -41,5 +41,5 @@ Execute os seguintes comandos
 
 ## Observações
 
-Toda parte de Insert e Select, usando os campos user_id, foi tratado em uma trait, usando Multi-Tenancy, foi implementando também o padrão repository.
+Toda parte de Insert e Select, usando os campos user_id, foi tratado em uma trait, usando Multi-Tenancy, foi implementado também o padrão repository.
 
