@@ -10,20 +10,20 @@
 
                 <div class="form-outline mb-4 d-flex flex-column">
                   <label class="form-label align-self-start">Email</label>
-                  <input type="email" v-model="form.email" required class="form-control form-control-lg" />
+                  <input type="email" v-model="state.form.email" required class="form-control form-control-lg" />
 
                 </div>
 
                 <div class="form-outline mb-4 d-flex flex-column">
                   <label class="form-label align-self-start">Senha</label>
-                  <input type="password" v-model="form.password" required class="form-control form-control-lg" />
+                  <input type="password" v-model="state.form.password" required class="form-control form-control-lg" />
 
                 </div>
 
 
                 <input class="btn btn-success btn-lg btn-block" type="submit" value="Logar">
 
-                <Mensagem :data="errors" :type="'alert-danger'"/>
+                <Mensagem />
 
               </form>
             </div>
@@ -34,38 +34,39 @@
   </section>
 </template>
   
-<script>
+<script setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import Auth from '../../services/Auth.js'
-import Mensagem from '../Mensagem.vue'
-export default {
-  components: {
-    Mensagem
-  },
-  data() {
-    return {
-      errors: [],
-      form: {
-        email: "",
-        password: ""
-      }
-    }
-  },
-  methods: {
-    login() {
-      Auth.Login(this.form)
-        .then(response => {
-          if (response && response.data) {
-            let data = response.data.data
-            this.$store.commit('SET_USER_TOKEN', data)
-            this.$router.push('/')
-          } else {
-            this.errors = response?.response?.data?.errors
-          }
-        }).catch(e => {
-          this.errors = e
-        })
+import Mensagem from '../Views/Mensagem.vue'
 
-    }
+
+const router = useRouter()
+const store = useStore()
+
+const state = reactive({
+  form: {
+    email: ref(''),
+    password: ref('')
   }
+})
+
+
+function login() {
+  Auth.Login(state.form)
+    .then(response => {
+      if (response && response.data) {
+        let data = response.data.data
+        store.dispatch('setToken', data)
+        router.push('/')
+      } else {
+        store.dispatch('setMessagem', {data: response?.response?.data?.errors})
+      }
+    }).catch(e => {
+      store.dispatch('setMessagem', {data: e})
+    })
 }
+
+
 </script>

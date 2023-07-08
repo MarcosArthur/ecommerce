@@ -9,7 +9,10 @@ export default createStore({
         userToken: [],
         user: [],
         orders: [],
-        errors: []
+        messages:  {
+            type: '',
+            data: []
+        }
     },
     mutations: {
         SET_CATALOG(state, catalog) {
@@ -35,12 +38,19 @@ export default createStore({
         SET_ORDERS(state, data) {
             state.orders = data
         },
-        SET_ERROS(state, data) {
-            state.errors = data
+        SET_MESSAGES(state, message) {
+            state.messages.type = ( message.type ?? 'alert-danger' )
+            state.messages.data = message.data
+        },
+        CLEAR_MESSAGES(state) {
+            state.messages = []
         }
 
     },
     actions: {
+        setToken(context, data) {
+            context.commit('SET_USER_TOKEN', data)
+        },
         fecthCatalog(context) {
             Catalog.fecthCatalog().then(response => {
                 context.commit('SET_CATALOG', response.data)
@@ -67,6 +77,9 @@ export default createStore({
         },
         logout(context) {
             context.commit('SET_USER_TOKEN', [])
+        },
+        setMessagem(context, data) {
+            context.commit('SET_MESSAGES', data)
         }
     },
     getters: {
@@ -79,8 +92,11 @@ export default createStore({
         allOrders(state) {
             return state.orders
         },
-        allErrors(state) {
-            return state.errors
+        allMessagens(state) {
+            return state.messages.data
+        },
+        typeMessage(state) {
+            return state.messages.type
         },
         accessToken(state) {
             return state?.userToken?.access_token

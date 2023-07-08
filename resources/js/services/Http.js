@@ -23,13 +23,13 @@ axios.interceptors.response.use(
   error => {
     
     if (error.response?.status == 401 && router.currentRoute.value.name != 'auth') {
-      router.push  ('/')
+      router.push('/')
       store.commit('SET_USER_TOKEN', [])
     
     } 
     
     if (error.response?.status == 422) {
-      store.commit('SET_ERROS', error.response.data.errors)
+      store.commit('SET_MESSAGES', error.response.data.errors)
     }
 
     return Promise.reject(error)
