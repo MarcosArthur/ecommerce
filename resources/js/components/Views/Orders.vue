@@ -18,22 +18,26 @@
             </div>
         </div>
 
-        <div v-if="!AllOrders.length">
-            <div class="alert alert-dark" role="alert">
-                Nenhum pedido realizado.
-            </div>
-        </div>
+    
+        <Mensagem />
+    
     </div>
 </template>
 
 <script setup>
-    import { computed, onMounted } from 'vue'
+    import { computed, onMounted, onBeforeMount } from 'vue'
     import { useStore } from 'vuex'
 
     const store = useStore()
 
     onMounted(() => {
         store.dispatch('fetchOrders')
+    })
+
+    onBeforeMount(() => {
+        if (!AllOrders.length) {
+            store.dispatch('setMessagem', {data: ['Nenhum pedido encontrado']})
+        }
     })
 
     function price(price, quantity) {

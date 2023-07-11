@@ -47,7 +47,6 @@
 
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import Mensagem from './Mensagem.vue'
 import Order from '../../services/Order.js'
 
 
