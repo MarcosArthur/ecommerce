@@ -12,40 +12,40 @@
                         {{ item.product.name }}
                         <sup>Valor unitario {{ $filters.currencyBRL(item.price) }}</sup>
                         <br>
-                        Valor total items: {{ $filters.currencyBRL(price(item.price, item.quantity))  }}
+                        Valor total items: {{ $filters.currencyBRL(price(item.price, item.quantity)) }}
                     </p>
                 </div>
             </div>
         </div>
 
-    
+
         <Mensagem />
-    
+
     </div>
 </template>
 
 <script setup>
-    import { computed, onMounted, onBeforeMount } from 'vue'
-    import { useStore } from 'vuex'
+import { computed, onBeforeMount, watch } from 'vue'
+import { useStore } from 'vuex'
 
-    const store = useStore()
+const store = useStore()
 
-    onMounted(() => {
-        store.dispatch('fetchOrders')
-    })
+onBeforeMount(() => {
+    store.dispatch('fetchOrders')
+})
 
-    onBeforeMount(() => {
-        if (!AllOrders.length) {
-            store.dispatch('setMessagem', {data: ['Nenhum pedido encontrado']})
-        }
-    })
+const AllOrders = computed(() => {
+    return store.getters.allOrders
+})
 
-    function price(price, quantity) {
-        return (price * quantity)
+watch(AllOrders, (newValue) => {
+    if (!newValue.length) {
+        store.dispatch('setMessagem', { data: ['Nenhum pedido encontrado'] })
     }
+}, {immediate: true})
 
-    const AllOrders = computed(() => {
-        return store.getters.allOrders
-    })
+function price(price, quantity) {
+    return (price * quantity)
+}
 
 </script>

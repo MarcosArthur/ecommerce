@@ -7,17 +7,21 @@
 
 <script setup>
 
-import { computed } from 'vue'
+import { computed, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
+
+onUnmounted(() => {
+    close()
+})
 
 function close() {
   store.commit('CLEAR_MESSAGES')
 }
 
 const data = computed(() => {
-     return store.getters.allMessagens
+    return store.getters.allMessagens
 })
 
 const typeMessage = computed(() => {

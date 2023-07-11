@@ -10,7 +10,7 @@
 
                 <div class="form-outline mb-4 d-flex flex-column">
                   <label class="form-label align-self-start">Email</label>
-                  <input type="email" v-model="state.form.email" required class="form-control form-control-lg" />
+                  <input type="email" v-model.trim="state.form.email" required class="form-control form-control-lg" />
 
                 </div>
 
