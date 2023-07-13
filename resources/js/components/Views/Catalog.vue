@@ -1,7 +1,7 @@
 <template>
     <div class="col-8">
     <div class="accordion" id="accordionExample">
-      <div class="accordion-item" v-for="(catalog, index) in $AllCatalog" :key="catalog.id">
+      <div class="accordion-item" v-for="(catalog, index) in catalog" :key="catalog.id">
         <h2 class="accordion-header">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" :data-bs-target="`#${catalog.id}`"
             aria-expanded="false" :aria-controls="`#${catalog.id}`">
@@ -22,16 +22,17 @@
 <script setup>
 import Product from './Product.vue'
 import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex'
+import { useCatalogStore } from '@/store/Catalog'
 
-const store = useStore()
+
+const store = useCatalogStore()
 
 onMounted(() => {
-    store.dispatch('fecthCatalog')
+    store.fethCatalog()
 })
 
-const $AllCatalog = computed(() => {
-    return store.getters.allCatalog
+const catalog = computed(() => {
+    return store.catalog
 })
 
 </script>

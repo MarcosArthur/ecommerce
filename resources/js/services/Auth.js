@@ -1,14 +1,14 @@
-import Http from './Http'
+import Http from "./Http";
 
 export default {
-    Login (data) {
-      return Http('auth', 'login', 'post', data)
+    Login(data) {
+        return Http("auth", "login", "post", data);
     },
 
     Logout() {
-      return Http('auth', 'logout', 'get')
+        return Http("auth", "logout", "get");
     },
     Me() {
-      return Http('auth', 'me', 'get')
-    }
-  }
+        return Http("auth", "me", "get");
+    },
+};

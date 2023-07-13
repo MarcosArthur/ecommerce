@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="card mb-1" v-for="order in AllOrders" :key="order.id">
+        <div class="card mb-1" v-for="order in orders" :key="order.id">
             <div class="card-body">
                 <h5 class="card-title">Pedido N° {{ order.id }}</h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary">Total {{ order.total }}</h6>
@@ -26,21 +26,23 @@
 
 <script setup>
 import { computed, onBeforeMount, watch } from 'vue'
-import { useStore } from 'vuex'
+import { useOrdersStore } from "@/store/Orders"
+import { useMessageStore } from "@/store/Message"
 
-const store = useStore()
+const store = useOrdersStore()
+const messageStore = useMessageStore()
 
 onBeforeMount(() => {
-    store.dispatch('fetchOrders')
+    store.fetchOrders()
 })
 
-const AllOrders = computed(() => {
-    return store.getters.allOrders
+const orders = computed(() => {
+    return store.orders
 })
 
-watch(AllOrders, (newValue) => {
+watch(orders, (newValue) => {
     if (!newValue.length) {
-        store.dispatch('setMessagem', { data: ['Nenhum pedido encontrado'] })
+        messageStore.setMessage({ data: ['Nenhum pedido encontrado'] })
     }
 }, {immediate: true})
 

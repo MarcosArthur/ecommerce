@@ -12,9 +12,9 @@
 </template>
 
 <script setup>
-import { useStore } from 'vuex'
+import { useCardStore } from '@/store/Card'
 
-const store = useStore()
+const store = useCardStore()
 
 const props = defineProps({
     product: {
@@ -23,7 +23,7 @@ const props = defineProps({
 })
 
 function addItem(item) {
-    store.dispatch('addItem', item)
+    store.addItem(item)
 }
 </script>
 

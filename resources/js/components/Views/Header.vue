@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <a class="navbar-brand" href="#">ECOMMERCE</a>
 
-      <div class="d-flex" role="search" v-if="$AccessToken">
-        <button class="btn btn-outline-success me-1"> Seja bem-vindo(a) {{ $UserName }}</button>
+      <div class="d-flex" role="search" v-if="accessToken">
+        <button class="btn btn-outline-success me-1"> Seja bem-vindo(a) {{ userName }}</button>
         <router-link to="/Orders" class="btn btn-outline-success me-1">Pedidos</router-link>
         <button class="btn btn-outline-success" type="submit" @click="logout()">Sair</button>
       </div>
@@ -19,15 +19,17 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
-import { useStore } from 'vuex'
+import { useAuthStore } from '../../store/Auth'
 import { useRouter } from 'vue-router';
 import Auth from '@/services/Auth.js'
 
-const store = useStore()
+const store = useAuthStore()
 const router = useRouter()
 
 onMounted(() => {
-  if ($AccessToken) store.dispatch('fetchUser')
+  if (accessToken.value) { 
+    store.fetchUser()
+  }
 })
 
 function logout() {
@@ -35,17 +37,17 @@ function logout() {
     .then(response => {
       if ('success' in response.data) {
         router.push('/')
-        store.dispatch('logout')
+        store.setToken({})
       }
     })
 }
 
-const $AccessToken = computed(() => {
-  return store.getters.accessToken
+const accessToken = computed(() => {
+  return store.token?.access_token
 })
 
-const $UserName = computed(() => {
-  return store.getters.getUserName
+const userName = computed(() => {
+  return store.user?.name
 })
 
 </script>

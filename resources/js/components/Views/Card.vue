@@ -2,9 +2,9 @@
       <div class="col-3">
         <ul class="list-group">
           <ul class="list-group">
-            <li class="list-group-item text-center" v-if="!$AllCard.length">Carrinho Vazio</li>
+            <li class="list-group-item text-center" v-if="cardIsEmpty">Carrinho Vazio</li>
 
-            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in $AllCard"
+            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="item in card"
               :key="item.id">
 
               <p>{{ item.quantity }}x {{ item.name }} <sup><strong> {{ $filters.currencyBRL(item.price) }}</strong></sup></p>
@@ -19,20 +19,16 @@
 
             </li>
 
-            <li class="list-group-item" v-if="$AllCard.length">Total: <span class="fs-4"> {{ $filters.currencyBRL($total) }}</span> </li>
+            <li class="list-group-item" v-if="!cardIsEmpty">Total: <span class="fs-4"> {{ $filters.currencyBRL(total) }}</span> </li>
           
-            <a href="#" class="list-group-item list-group-item-action active" v-if="$total != 0 && $AccessToken"
+            <a href="#" class="list-group-item list-group-item-action active" v-if="!cardIsEmpty"
               @click="checkout()">
               <div class="d-flex w-100 justify-content-between">
                 Fechar Pedido
               </div>
             </a>
 
-            <a href="#" class="list-group-item list-group-item-action active" v-else-if="$total != 0">
-              <div class="d-flex w-100 justify-content-between">
-                <router-link to="/Auth" class="text-bg-primary text-decoration-none ">Fechar Pedido</router-link>
-              </div>
-            </a>
+
 
           </ul>
         </ul>
@@ -46,32 +42,35 @@
 <script setup>
 
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useCardStore } from '@/store/Card'
+import { useMessageStore } from '@/store/Message'
 import Order from '../../services/Order.js'
 
-
-const store = useStore()
+const store = useCardStore()
+const messageStore = useMessageStore()
 
 function remove(id) {
-  store.dispatch('removeItem', id)
+  store.removeItem(id)
 }
 
 function checkout() {
   let form = {}
-  form.total = this.$total
-  form.items = this.$AllCard
+  form.total = this.total
+  form.items = this.card
 
   Order.Checkout(form).then(response => {
     if ('success' in response.data) {
-      store.dispatch('setMessagem', {data: response.data.success, type: 'alert-success'})
-      store.dispatch('clearCard')
+      messageStore.setMessage({data: response.data.success, type: 'alert-success'})
+      store.clearCard() 
     }
 
+  }).catch(e => {
+    console.error(e)
   })
 }
 
-const $AllCard = computed(() => {
-    let card = store.getters.allCard
+const card = computed(() => {
+    let card = store.card
     let newItems = []
     card.forEach(element => {
         let item = newItems.findIndex(e => e.id == element.id)
@@ -85,14 +84,11 @@ const $AllCard = computed(() => {
     return newItems
 })
 
-const $AccessToken = computed(() => {
-  return store.getters.accessToken
-})
+const cardIsEmpty = computed(() => !card.value.length)
 
-const $total = computed(() => {
+const total = computed(() => {
   let price = 0
-
-  $AllCard.value.forEach(e => {
+  card.value.forEach(e => {
     price += (parseFloat(e.price) * e.quantity)
   })
 

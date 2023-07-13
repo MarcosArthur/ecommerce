@@ -1,21 +1,24 @@
 import "./bootstrap";
 import { createApp } from "vue";
-import store from "./store/index";
+import { createPinia } from "pinia";
 import routes from "./routes";
 import App from "./components/App.vue";
-import Mensagem from './components/Views/Mensagem.vue'
+import Mensagem from "./components/Views/Mensagem.vue";
 
 const app = createApp(App);
-
+app.use(createPinia());
 app.config.globalProperties.$filters = {
     currencyBRL(value) {
-        return Number(value).toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-        });
+        if (!isNaN(value)) {
+            return Number(value).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+            });
+        }
+        return 0;
     },
 };
-app.component('Mensagem', Mensagem)
+
+app.component("Mensagem", Mensagem);
 app.use(routes);
-app.use(store);
 app.mount("#app");

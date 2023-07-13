@@ -10,7 +10,7 @@
 
                 <div class="form-outline mb-4 d-flex flex-column">
                   <label class="form-label align-self-start">Email</label>
-                  <input type="email" v-model.trim="state.form.email" required class="form-control form-control-lg" />
+                  <input type="email" v-model="state.form.email" required class="form-control form-control-lg" />
 
                 </div>
 
@@ -37,13 +37,15 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useAuthStore } from '../../store/Auth'
+import { useMessageStore }from "../../store/Message"
 import Auth from '../../services/Auth.js'
 
 
 const router = useRouter()
-const store = useStore()
 
+const store = useAuthStore()
+const messageStore = useMessageStore()
 const state = reactive({
   form: {
     email: ref(''),
@@ -57,13 +59,13 @@ function login() {
     .then(response => {
       if (response && response.data) {
         let data = response.data.data
-        store.dispatch('setToken', data)
+        store.setToken(data)
         router.push('/')
       } else {
-        store.dispatch('setMessagem', {data: response?.response?.data?.errors})
+        messageStore.setMessage({data: response?.response?.data?.errors})
       }
     }).catch(e => {
-      store.dispatch('setMessagem', {data: e})
+      messageStore.setMessage({data: e})
     })
 }
 
