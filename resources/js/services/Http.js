@@ -23,15 +23,9 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
-        // console.log(error);
-        // console.log(error.response.status);
-        // console.log(router.currentRoute.value.name);
-        // console.log(router.currentRoute.value.name !== "auth");
-        // console.log(error.response.status === 401);
-
         const authUserStore = useAuthStore();
         const messageStore = useMessageStore();
-        // console.log(router.currentRoute.value.name);
+
         if (
             error.response.status === 401 &&
             router.currentRoute.value.name != "auth"
