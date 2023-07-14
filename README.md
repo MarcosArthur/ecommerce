@@ -35,7 +35,7 @@ Execute os seguintes comandos
 
 ## Tecnologias
 - Vuejs
-- Vuex
+- Pinia
 - Laravel
 - Bootstrap
 
