@@ -19,7 +19,7 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
-import { useAuthStore } from '../../store/Auth'
+import { useAuthStore } from '@/store/Auth'
 import { useRouter } from 'vue-router';
 import Auth from '@/services/Auth.js'
 
@@ -27,7 +27,7 @@ const store = useAuthStore()
 const router = useRouter()
 
 onMounted(() => {
-  if (accessToken.value) { 
+  if (accessToken.value) {
     store.fetchUser()
   }
 })

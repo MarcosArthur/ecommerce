@@ -10,7 +10,7 @@
 
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import Header from "./Views/Header.vue";
+import Header from "./components/Header.vue";
 
 const router = useRouter();
 

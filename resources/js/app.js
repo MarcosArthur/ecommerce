@@ -2,8 +2,8 @@ import "./bootstrap";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import routes from "./routes";
-import App from "./components/App.vue";
-import Mensagem from "./components/Views/Mensagem.vue";
+import App from "./App.vue";
+import Mensagem from "./components/Mensagem.vue";
 
 const app = createApp(App);
 app.use(createPinia());

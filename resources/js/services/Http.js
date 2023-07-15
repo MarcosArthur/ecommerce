@@ -35,7 +35,7 @@ axios.interceptors.response.use(
         }
 
         if (error.response?.status === 422) {
-            messageStore.setMessage({ data: error.response.data });
+            messageStore.setMessagem({ data: error.response.data.errors });
         }
 
         return Promise.reject(error);

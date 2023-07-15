@@ -44,7 +44,7 @@
 import { computed } from 'vue'
 import { useCardStore } from '@/store/Card'
 import { useMessageStore } from '@/store/Message'
-import Order from '../../services/Order.js'
+import Order from '../services/Order.js'
 
 const store = useCardStore()
 const messageStore = useMessageStore()
@@ -60,28 +60,25 @@ function checkout() {
 
   Order.Checkout(form).then(response => {
     if ('success' in response.data) {
-      messageStore.setMessage({data: response.data.success, type: 'alert-success'})
+      messageStore.setMessagem({data: response.data.success, type: 'alert-success'})
       store.clearCard() 
     }
-
-  }).catch(e => {
-    console.error(e)
   })
 }
 
 const card = computed(() => {
-    let card = store.card
-    let newItems = []
-    card.forEach(element => {
-        let item = newItems.findIndex(e => e.id == element.id)
-        if (item != -1) {
-        newItems[item].quantity += 1
-        } else {
-        element.quantity = 1
-        newItems.push(element)
-        }
-    })
-    return newItems
+  let card = store.card
+  let newItems = []
+  card.forEach(element => {
+    let item = newItems.findIndex(e => e.id == element.id)
+    if (item != -1) {
+      newItems[item].quantity += 1
+    } else {
+      element.quantity = 1
+      newItems.push(element)
+    }
+  })
+  return newItems
 })
 
 const cardIsEmpty = computed(() => !card.value.length)
@@ -89,12 +86,10 @@ const cardIsEmpty = computed(() => !card.value.length)
 const total = computed(() => {
   let price = 0
   card.value.forEach(e => {
-    price += (parseFloat(e.price) * e.quantity)
+    price += (Number(e.price) * e.quantity)
   })
 
   return price.toFixed(2)
 })
-
-
 
 </script>

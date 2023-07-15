@@ -6,9 +6,9 @@ export const useMessageStore = defineStore("message", () => {
         data: [],
     });
 
-    function setMessage(data) {
+    function setMessagem(data) {
         message.value = Object.assign(message.value, data);
     }
 
-    return { message, setMessage };
+    return { message, setMessagem };
 });

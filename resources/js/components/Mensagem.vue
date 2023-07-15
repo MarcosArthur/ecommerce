@@ -6,9 +6,8 @@
 </template>
 
 <script setup>
-
 import { computed, onUnmounted } from 'vue'
-import {useMessageStore} from "../../store/Message"
+import { useMessageStore } from "../store/Message"
 
 const store = useMessageStore()
 
@@ -17,7 +16,7 @@ onUnmounted(() => {
 })
 
 function close() {
-    store.setMessage({data: {}})
+    store.setMessagem({ data: {} })
 }
 
 const data = computed(() => {
@@ -27,6 +26,5 @@ const data = computed(() => {
 const typeMessage = computed(() => {
     return store.message.type
 })
-
 
 </script>

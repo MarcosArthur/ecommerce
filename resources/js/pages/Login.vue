@@ -35,16 +35,22 @@
 </template>
   
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../../store/Auth'
-import { useMessageStore }from "../../store/Message"
-import Auth from '../../services/Auth.js'
+import { useAuthStore } from '../store/Auth'
+import { useMessageStore }from '../store/Message'
+import Auth from '../services/Auth.js'
 
 
 const router = useRouter()
 
 const store = useAuthStore()
+
+onMounted(() => {
+  document.title = "Login"
+})
+
+
 const messageStore = useMessageStore()
 const state = reactive({
   form: {
@@ -62,10 +68,10 @@ function login() {
         store.setToken(data)
         router.push('/')
       } else {
-        messageStore.setMessage({data: response?.response?.data?.errors})
+        messageStore.setMessagem({data: response?.response?.data?.errors})
       }
     }).catch(e => {
-      messageStore.setMessage({data: e})
+      messageStore.setMessagem({data: e})
     })
 }
 
