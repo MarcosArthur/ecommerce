@@ -19,7 +19,24 @@ class OrderController extends Controller
      */
     public function index(OrderRepositoryInterface $order)
     {
-        return $order->with(['items.product', 'user'])->get();
+        try { 
+            $record = $order->with(['items.product', 'user'])->get();
+         
+            if ($record->isEmpty()){
+                throw new \Exception('Nenhum pedido encontrado');
+            } 
+            
+            return $record;
+        
+        } catch (\Exception $e) {
+            
+            return response()
+            ->json([
+                'errors' => [
+                    'error' => $e->getMessage()
+                ]
+            ], 422);
+        }
     }
 
     /**

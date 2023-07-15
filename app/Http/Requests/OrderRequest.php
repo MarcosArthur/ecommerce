@@ -33,7 +33,10 @@ class OrderRequest extends FormRequest
     public function messages() : array
     {
         return [
-            'total.required' => "Valor total do pedido não informado"
+            'total.required' => "Valor total do pedido não informado",
+            'items.*.product_id.required' => "O produto não foi informado",
+            'items.*.price.required' => "Valor dos itens não foi informado",
+            'items.*.quantity.required' => "Quantidade dos itens não foi informada"
         ];
     }
 }
