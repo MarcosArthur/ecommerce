@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+
+use App\Casts\DateTimeWithTimeZone;
 use App\Traits\FIlterByUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +17,7 @@ class Order extends Model
     protected $fillable = ['total'];
 
     protected $casts = [
-        'created_at' => 'datetime:d-m-Y h:i:s',
+        'created_at' => DateTimeWithTimeZone::class,
     ];
 
     
