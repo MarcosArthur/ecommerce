@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "./pages/Home.vue";
 import Auth from "./pages/Login.vue";
-import Orders from "./components/Orders.vue";
+import Orders from "./pages/Orders.vue";
 
 const routes = [
     { path: "/", name: "/", component: Home },

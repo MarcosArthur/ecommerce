@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class DateTimeWithTimeZone implements CastsAttributes
 {
 
-
     const TIME_ZONE = "America/Sao_Paulo";
     const FORMAT_DATE = "d/m/Y H:i:s";
     /**
