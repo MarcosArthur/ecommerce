@@ -2,8 +2,7 @@
   <nav class="navbar navbar-expand-lg bg-dark mb-5" data-bs-theme="dark">
 
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">ECOMMERCE</a>
-
+      <router-link to="/" class="navbar-brand">ECOMMERCE</router-link>
       <div class="d-flex" role="search" v-if="accessToken">
         <button class="btn btn-outline-success me-1"> Seja bem-vindo(a) {{ userName }}</button>
         <router-link to="/Orders" class="btn btn-outline-success me-1">Pedidos</router-link>
