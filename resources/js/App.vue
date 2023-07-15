@@ -1,9 +1,11 @@
 <template>
     <div id="app">
         <Header v-if="$isRouteAuth" />
-        <Transition>
-            <router-view></router-view>
-        </Transition>
+        <router-view v-slot="{ Component }">
+            <transition>
+                <component :is="Component" />
+            </transition>
+        </router-view>
     </div>
 </template>
 <script setup>
