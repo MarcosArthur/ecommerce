@@ -84,12 +84,9 @@ const card = computed(() => {
 const cardIsEmpty = computed(() => !card.value.length)
 
 const total = computed(() => {
-  let price = 0
-  card.value.forEach(e => {
-    price += (Number(e.price) * e.quantity)
-  })
-
-  return price.toFixed(2)
+  return card.value
+  .map(e => (Number(e.price) * e.quantity))
+  .reduce((accumulator, newValue) => accumulator + newValue).toFixed(2)
 })
 
 </script>
