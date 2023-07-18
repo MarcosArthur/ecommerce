@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="container">
     <Order v-for="order in orders" :key="order.id" :order="order"/>
     <Mensagem />
    </div>

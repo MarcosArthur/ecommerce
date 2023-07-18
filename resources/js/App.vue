@@ -2,7 +2,7 @@
     <div id="app">
         <Header v-if="$isRouteAuth" />
         <router-view v-slot="{ Component }">
-            <transition>
+            <transition name="links">
                 <component :is="Component" />
             </transition>
         </router-view>
@@ -21,14 +21,20 @@ const $isRouteAuth = computed(() => {
 });
 </script>
 
-<style scoped>
-.v-enter-active,
-.v-leave-active {
+<style>
+.links-enter-active,
+.links-leave-active {
     transition: opacity 0.5s ease;
 }
 
-.v-enter-from,
-.v-leave-to {
+.links-enter-from,
+.links-leave-to {
     opacity: 0;
+}
+
+.router-link-exact-active.btn {
+    background-color: #198754;
+    color:white;
+    cursor: pointer;
 }
 </style>
