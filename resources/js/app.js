@@ -6,6 +6,9 @@ import App from "./App.vue";
 import Mensagem from "./components/Mensagem.vue";
 
 const app = createApp(App);
+
+app.config.errorHandler = (err) => {};
+
 app.use(createPinia());
 app.config.globalProperties.$filters = {
     currencyBRL(value) {

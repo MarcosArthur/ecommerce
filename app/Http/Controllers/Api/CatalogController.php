@@ -15,4 +15,9 @@ class CatalogController extends Controller
     {
         return $category->with('product')->get();
     }
+
+    public function destroy(CategoryRepositoryInterface $category)
+    {
+    
+    }
 }

@@ -22,4 +22,9 @@ class RepositoryBase implements BaseRepositoryInterface {
         return $this->model->create($data);
     }
 
+    public function isEmpty()
+    {
+        return $this->model->isEmpty();
+    }
+
 }

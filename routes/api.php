@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CatalogController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,4 @@ Route::group([
 
 Route::resource('catalog', CatalogController::class);
 Route::resource('order', OrderController::class);
+Route::resource('product', ProductController::class);

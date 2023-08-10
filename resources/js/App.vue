@@ -10,15 +10,29 @@
 </template>
 <script setup>
 
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Header from "./components/Header.vue";
 
+import {useCatalogStore} from "./store/Catalog"
+
 const router = useRouter();
+
+const state = useCatalogStore()
 
 const $isRouteAuth = computed(() => {
     return router.currentRoute.value.name != "auth";
 });
+
+
+onMounted(() => {
+    window.Echo.channel("product")
+    .listen(".product.action", (e) => {
+        state.execute(e.product, e.operation);
+    }).catch(e => {
+    });
+})
+
 </script>
 
 <style>

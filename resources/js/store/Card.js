@@ -9,6 +9,10 @@ export const useCardStore = defineStore("card", () => {
         this.card.push(item);
     }
 
+    const isProduct = ({ id }) => {
+        return card.value.find((item) => item.id == id);
+    };
+
     function removeItem(id) {
         let index = card.value.findIndex((element) => element.id == id);
         card.value.splice(index, 1);
@@ -18,5 +22,5 @@ export const useCardStore = defineStore("card", () => {
         card.value = [];
     }
 
-    return { card, addItem, removeItem, clearCard };
+    return { card, addItem, removeItem, clearCard, isProduct };
 });

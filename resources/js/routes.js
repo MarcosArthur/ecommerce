@@ -7,6 +7,7 @@ const routes = [
     { path: "/", name: "/", component: Home },
     { path: "/Auth", name: "auth", component: Auth },
     { path: "/Orders", name: "orders", component: Orders },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: Auth },
 ];
 
 const router = createRouter({
