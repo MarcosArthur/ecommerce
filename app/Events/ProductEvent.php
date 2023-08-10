@@ -29,7 +29,7 @@ class ProductEvent implements ShouldBroadcast
 
      public function broadcastAs(): string
      {
-         return 'product.action';
+         return 'product.action_teste';
      }
 
     public function broadcastOn() : Channel
