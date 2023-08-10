@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'errors' => ['error' => 'Email e/ou senha errados.']
             ], 401);
         }
-
+        // return token
         return $this->respondWithToken($token);
     }
 
